@@ -1,0 +1,420 @@
+<template>
+    <div class="login home">
+        <img class="login-title w100" :src="this.$store.state.common.loginImg">
+        <!-- <img style="width:70%;position: absolute;left:15%;top:36%;" src="../../assets/img/Landing_page_bg2.png" alt=""/> -->
+        <div class="login-box">
+            <div class="ub ub-ac login-logo ub-pc" style="font-size:0;">
+                <img style="width:438px;" src="../../assets/img/Popup_top.png" alt="">
+            </div>
+
+            <div class="login-content">
+                <div class="login-text" style="color:#05ffff;font-size:24px;padding: 50px 0px 38px;">
+                    登 录
+                </div>
+                <el-form ref="loginForm" class="login-from-box" :model="loginForm" :rules="loginRules">
+                    <el-form-item prop="username" :label-width="formLabelWidth">
+                        <el-input v-model.trim="loginForm.username" prefix-icon="el-icon-user-solid" clearable placeholder="用户名" autocomplete="off" @keyup.native.enter="validUser('loginForm',loginForm)" />
+                    </el-form-item>
+                    <el-form-item style="margin-top: 40px;" prop="password" :label-width="formLabelWidth">
+                        <el-input v-model.trim="loginForm.password" prefix-icon="iconfont icon-mima" show-password placeholder="密码" autocomplete="off" @keyup.native.enter="validUser('loginForm',loginForm)" />
+                    </el-form-item>
+                    <div class="verify ub ub-ac ub-pj">
+                        <el-form-item class="ub-f1" prop="captcha" :label-width="formLabelWidth">
+                            <el-input v-model.trim="loginForm.captcha" style="width: 100%" clearable placeholder="验证码" autocomplete="off" @keyup.native.enter="validUser('loginForm',loginForm)" />
+                        </el-form-item>
+                        <div class="ub ub-ac ub-pj" style="margin: 0 0 22px 20px;width: 150px">
+                            <img style="width: 120px;height: 40px;display: block;border-radius: 4px" :src="verifyCode" alt="验证码">
+                            <i class="el-icon-refresh-right login-yzm" style="font-size: 20px" @click="handleRefresh" />
+                        </div>
+                    </div>
+                </el-form>
+                <div class="rember-pwd" style="margin: 10px 0 30px;">
+                    <el-checkbox v-model="checked">
+                        记住密码
+                    </el-checkbox>
+                </div>
+
+                <div class="ub ub-pc ub-f1 login-btn">
+                    <el-button style="width:318px;" type="primary" @click="validUser('loginForm',loginForm)">
+                        登 录
+                    </el-button>
+                </div>
+            </div>
+        </div>
+        <div ref="canvasFrame" class="container" />
+    </div>
+</template>
+
+<script>
+import { login, get_login_theme } from '../../server/common.js'
+import md5 from '../../assets/js/md5.js'
+import Base64 from '../../assets/js/base64.js'
+var SEPARATION = 100
+
+var AMOUNTX = 50
+
+var AMOUNTY = 50
+var camera, scene, renderer // 相机，场景，渲染器
+var particles; var particle; var count = 0
+var mouseX = 0
+
+var mouseY = -438 // 设置初始位置
+var windowHalfX = window.innerWidth / 2
+var windowHalfY = window.innerHeight / 2
+
+var onOff = false
+export default {
+    name: 'Login',
+    data() {
+        return {
+            loginImg: require('../../assets/img/login_title_bg.png'),
+            logoImg: require('../../assets/img/new_logo.png'),
+            loginForm: {
+                username: '',
+                password: '',
+                captcha: ''
+            },
+            loginRules: {
+                username: [{
+                    required: true,
+                    message: '请输入用户名',
+                    trigger: 'blur'
+                }],
+                password: [{
+                    required: true,
+                    message: '请输入密码',
+                    trigger: 'blur'
+                }],
+                captcha: [{
+                    required: true,
+                    message: '请输入验证码',
+                    trigger: 'blur'
+                }]
+
+            },
+            checked: false,
+            formLabelWidth: '0px',
+            canvasFrame: null,
+            refresh: 0
+        }
+    },
+    computed: {
+        verifyCode() {
+            return 'base_info/terminal/getCaptcha?width=120&height=40&' + this.refresh
+        }
+    },
+    created() {
+        this.initTheme()
+        const loginInfo = this.$getlocalStorage('loginInfo')
+        if (loginInfo !== '') {
+            loginInfo.password = Base64.decode(loginInfo.password)
+            this.loginForm = loginInfo
+            this.checked = true
+        }
+    },
+    mounted() {
+        console.log('router', this.$route.params)
+        this.$nextTick(() => {
+            onOff = false
+            this.canvasFrame = this.$refs.canvasFrame
+            this.init()
+            this.animate()
+        })
+    },
+    beforeDestroy() {
+        onOff = true
+        window.cancelAnimationFrame(this.animate)
+    },
+    methods: {
+        handleRefresh() {
+            this.refresh = Date.now()
+        },
+        initTheme() {
+            get_login_theme({}).then(res => {
+                console.log('登录页获取主题', res)
+                const themeInfo = {
+                    type: res.type,
+                    loginImg: res.loginImg,
+                    logoImg: res.logoImg
+                }
+                this.$setlocalStorage('themeInfo', themeInfo)
+                if (themeInfo.type === 0) {
+                    this.$store.commit('switchTheme', 'black-theme')
+                } else if (themeInfo.type === 1) {
+                    this.$store.commit('switchTheme', 'white-theme')
+                }
+                if (themeInfo.loginImg) {
+                    this.$store.commit('setloginImg', themeInfo.loginImg)
+                } else {
+                    this.$store.commit('setloginImg', this.loginImg)
+                }
+                if (themeInfo.logoImg) {
+                    this.$store.commit('setlogoImg', themeInfo.logoImg)
+                } else {
+                    this.$store.commit('setlogoImg', this.logoImg)
+                }
+            }).catch(error => {
+                console.log('error', error)
+            })
+        },
+        onDocumentMouseMove(event) {
+            mouseX = event.clientX - windowHalfX
+            mouseY = -438
+        },
+        onDocumentTouchStart(event) {
+            if (event.touches.length === 1) {
+                event.preventDefault()
+                mouseX = event.touches[0].pageX - windowHalfX
+                mouseY = event.touches[0].pageY - windowHalfY
+            }
+        },
+        onDocumentTouchMove(event) {
+            if (event.touches.length === 1) {
+                event.preventDefault()
+                mouseX = event.touches[0].pageX - windowHalfX
+                mouseY = event.touches[0].pageY - windowHalfY
+            }
+        },
+        animate() {
+            if (onOff) {
+                return
+            }
+            window.requestAnimationFrame(this.animate)
+            this.render()
+        },
+        render() { // 移动相机形成动画
+            camera.position.x += (mouseX - camera.position.x) * 0.05
+            camera.position.y += (-mouseY - camera.position.y) * 0.05
+            camera.lookAt(scene.position)
+            var i = 0
+            for (var ix = 0; ix < AMOUNTX; ix++) {
+                for (var iy = 0; iy < AMOUNTY; iy++) {
+                    particle = particles[i++]
+                    particle.position.y = (Math.sin((ix + count) * 0.3) * 50) +
+							(Math.sin((iy + count) * 0.5) * 50)
+                    particle.scale.x = particle.scale.y = (Math.sin((ix + count) * 0.3) + 1) * 4 +
+							(Math.sin((iy + count) * 0.5) + 1) * 4
+                }
+            }
+
+            // console.log(camera.position.x,camera.position.y,camera.position.z)
+            renderer.render(scene, camera)
+            count += 0.1
+        },
+        onWindowResize() {
+            windowHalfX = window.innerWidth / 2
+            windowHalfY = window.innerHeight / 2
+            camera.aspect = window.innerWidth / window.innerHeight
+            camera.updateProjectionMatrix()
+            renderer.setSize(window.innerWidth, window.innerHeight)
+        },
+        init() {
+            // eslint-disable-next-line no-undef
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000)
+            camera.position.z = 1000
+            console.log(camera.position.x, camera.position.y, camera.position.z)
+            // eslint-disable-next-line no-undef
+            scene = new THREE.Scene()
+            // eslint-disable-next-line no-array-constructor
+            particles = new Array()
+            var PI2 = Math.PI * 2
+            // eslint-disable-next-line no-undef
+            var material = new THREE.SpriteCanvasMaterial({
+                color: 0x097bdb,
+                // color:0xffe600,//小点点的颜色
+                program: function(context) {
+                    context.beginPath()
+                    context.arc(0, 0, 0.5, 0, PI2, true)
+                    context.fill()
+                }
+            })
+            var i = 0
+            for (var ix = 0; ix < AMOUNTX; ix++) {
+                for (var iy = 0; iy < AMOUNTY; iy++) {
+                    // eslint-disable-next-line no-undef
+                    particle = particles[i++] = new THREE.Sprite(material)
+                    particle.position.x = ix * SEPARATION - ((AMOUNTX * SEPARATION) / 2)
+                    particle.position.z = iy * SEPARATION - ((AMOUNTY * SEPARATION) / 2)
+                    scene.add(particle)
+                }
+            }
+
+            var width = this.canvasFrame.clientWidth
+            var height = this.canvasFrame.clientHeight
+            // eslint-disable-next-line no-undef
+            renderer = new THREE.CanvasRenderer({
+                antialias: true,
+                alpha: true // 设置背景透明
+            })
+            renderer.setSize(width, height)
+            this.canvasFrame.appendChild(renderer.domElement)
+            // renderer.setClearColor(0x13194b);//设置背景色
+            document.addEventListener('mousemove', this.onDocumentMouseMove, false)
+            document.addEventListener('touchstart', this.onDocumentTouchStart, false)
+            document.addEventListener('touchmove', this.onDocumentTouchMove, false)
+            window.addEventListener('resize', this.onWindowResize, false)
+            camera.position.x = 133.99999999999972
+            camera.position.y = 437.99999999999943
+            camera.lookAt(scene.position)
+            renderer.render(scene, camera)
+            this.onWindowResize()
+        },
+        validUser(formName, obj) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.login_user(obj)
+                } else {
+                    console.log('error submit!!')
+                    return false
+                }
+            })
+        },
+        login_user(obj) {
+            const data = {
+                queryData: {},
+                paramsData: {
+                    username: obj.username,
+                    password: md5.md5_32(obj.password).toLowerCase(),
+                    captcha: obj.captcha
+                }
+            }
+            login(data).then(res => {
+                console.log('success', res)
+                const userInfo = {
+                    cnName: res.info.chineseName,
+                    id: res.info.id,
+                    type: res.info.roleId
+                }
+                this.$setsessionStorage('userInfo', userInfo)
+                if (this.checked) {
+                    const data = {
+                        username: this.loginForm.username,
+                        password: Base64.encode(this.loginForm.password)
+                    }
+                    this.$setlocalStorage('loginInfo', data)
+                } else {
+                    this.$removelocalStorage('loginInfo')
+                }
+                this.$router.push({
+                    name: 'report_form_task'
+                })
+                // this.$router.push({
+                // 	name: 'work_platform',
+                // })
+            }).catch(error => {
+                console.log('error', error)
+                this.handleRefresh()
+            })
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.login-title {
+    height:50px; position: absolute;left:50%;top:120px;transform: translateX(-50%);
+    width: auto;
+}
+.login {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transition: all .3s cubic-bezier(.55,0,.1,1);
+    margin: 0px;
+    overflow: hidden;
+    background: url(../../assets/img/login_bg.jpg) no-repeat 0 0;
+    background-size: cover;
+}
+
+.login-bg {
+    width: 50%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 50%;
+    bottom: 0;
+    img {
+        height: 90%;
+        position: absolute;
+        bottom: 0
+    }
+}
+
+.container {
+    position: fixed;
+    height: 700px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+}
+
+.login-box {
+    width: 480px;
+    height:468px;
+    background-color: rgba(13,66,128,0.96);
+    position: fixed;
+    top: 54%;
+    left: 50%;
+    border: 1px solid #4bacf9;
+    transform: translate(-50%,-50%);
+    padding: 0px;
+    z-index: 3;
+    box-sizing: border-box;
+
+}
+.login .el-input__inner {
+    background: transparent;
+    border: 1px solid #1cd7fa;
+    box-shadow: 0px 0px 7px #389bf7 inset;
+    color: #fff;
+}
+.login-logo{
+    width:100%;
+    position: absolute;
+    left:0;
+    top:-17px;
+    text-align:center;
+}
+.login-content {
+    width: 318px;
+    margin:0 auto;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.welcome {
+    font-size: 14px;
+    color: #99a0ac;
+    span {
+        font-size: 17px;
+    }
+}
+
+.project-name {
+    font-size: 24px;
+    color: #5e676f;
+    margin-top: 27px;
+}
+.login-yzm {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #1adcff;
+}
+.verify {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+}
+
+</style>
+<style>
+:-webkit-autofill {
+    -webkit-text-fill-color: #fff !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+}
+</style>

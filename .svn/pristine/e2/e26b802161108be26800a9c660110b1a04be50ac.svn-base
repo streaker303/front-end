@@ -1,0 +1,52 @@
+/* 登录组件适配 */
+.login.home p{
+    top: 80px !important;
+}
+.login-content{
+    width:280px!important;
+}
+.login-box {
+    padding-top: 20px !important;
+    width: 340px!important;
+    height:340px!important;
+}
+.login-text{
+    font-size:24px;padding:0px 0 10px 0!important;
+}
+.login-btn button{
+    width:280px!important;
+}
+.login-image{
+    top:100px!important;
+}
+/* 顶部组件适配 */
+
+.time-line{
+	padding-left:20px!important;
+}
+.time-tree{
+	width:720px!important;
+	padding-top:50px!important;
+}
+.top-replay{
+	font-size:23px!important;
+	top: 14px!important;
+	line-height: 54px!important;
+}
+.reply-linner-ist-item{
+		width:320px!important;
+		height:200px!important;
+}
+
+.search-message {
+	height:360px!important;
+}
+.defense_drill-replay-inner .right-item{
+		width:320px!important;
+		height:200px!important;
+		
+}
+.right-top{
+	width:254px!important;
+}
+

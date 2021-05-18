@@ -1,0 +1,458 @@
+<template>
+    <div class="event event-wrapper">
+        <eHeader :query="query" :types="types" @searchInit="searchInit" />
+        <div class="attendance-list">
+            <div class="ub ub-pj w100">
+                <div class="list-tips">
+                    报表任务
+                </div>
+                <div>
+                    <addBtn icon="el-icon-plus" title="添加任务" @click="addDialog = true" />
+                    <deleteBtn style="margin-left: 10px;" icon="el-icon-delete" title="刪 除" @click="handleDelAll" />
+                </div>
+            </div>
+            <el-table
+                ref="multipleTable"
+                v-loading="loading"
+                class="bigTable"
+                :row-key="
+                    (row) => {
+                        return row.id;
+                    }
+                "
+                :data="tableData"
+                border
+                stripe
+                tooltip-effect="dark"
+                @selection-change="handleSelectionChange"
+            >
+                <!-- <el-table-column type="selection" :reserve-selection="true" width="50" /> -->
+                <el-table-column align="center" type="index" width="50" :index="indexMethod" label="序号" />
+                <el-table-column prop="name" label="报表名称" show-overflow-tooltip />
+                <el-table-column align="center" prop="typeCN" label="报表类型" width="130" />
+                <el-table-column align="center" prop="createUserName" label="创建人" width="130" />
+                <el-table-column align="center" prop="createTime" label="创建时间" width="170" />
+                <el-table-column align="center" prop="lastTime" label="最新执行时间" width="170" />
+                <el-table-column align="center" label="执行结果" width="170">
+                    <template slot-scope="scope">
+                        <div>
+                            <el-checkbox v-model="scope.row.checked" @change="selectFun">
+                                备选项
+                            </el-checkbox>
+                            <span>{{ scope.row.checked }}</span>
+                            <span
+                                class="num-btn"
+                                style="
+                        color: #00e9ff;
+                        font-size: 14px;
+                        text-decoration: underline;
+                        cursor: pointer;
+"
+                                @click="handleSee(scope.row)"
+                            >{{ scope.row.resultNum }}</span>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" label="操作" width="120">
+                    <template slot-scope="scope">
+                        <el-button type="text" @click="handleStart(scope.row)">
+                            {{ scope.row.status == 0 ? "禁用" : "开启" }}
+                        </el-button>
+                        <el-button type="text" @click="handleDelete(scope.row)">
+                            删除
+                        </el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="pagination">
+                <el-pagination
+                    background
+                    :current-page="page"
+                    :page-sizes="[10, 20, 30, 40, 50]"
+                    :page-size="size"
+                    layout="total, sizes, prev, pager, next"
+                    prev-text="上一页"
+                    next-text="下一页"
+                    :total="total"
+                    @size-change="sizeChange"
+                    @current-change="pageChange"
+                />
+            </div>
+        </div>
+        <el-dialog title="添加任务" :visible.sync="addDialog" width="790px" custom-class="attendance-dialog">
+            <div style="width: 90%; margin: 0 auto;">
+                <el-form ref="reportForm" label-width="96px" label-position="right" :rules="rules" :model="reportForm">
+                    <el-form-item label="报表名称：" prop="name">
+                        <el-input v-model="reportForm.name" placeholder="请输入" style="width: 80%;" size="small" clearable />
+                    </el-form-item>
+                    <el-form-item label="报表类型：" prop="type">
+                        <el-select v-model="reportForm.type" style="width: 80%;" placeholder="请选择" size="small">
+                            <el-option v-for="item in types" :key="item.value" :label="item.label" :value="item.value" />
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="数据范围：">
+                        <el-date-picker
+                            v-model="sayTimes"
+                            size="small"
+                            style="width: 80%;"
+                            type="datetimerange"
+                            range-separator="至"
+                            value-format="yyyy-MM-dd HH:mm:ss"
+                            start-placeholder="开始日期"
+                            end-placeholder="结束日期"
+                        />
+                    </el-form-item>
+                    <el-form-item label="报表模板：" prop="mouldId">
+                        <el-select v-model="reportForm.mouldId" style="width: 80%;" placeholder="请选择" size="small">
+                            <el-option v-for="item in templates" :key="item.value" :label="item.label" :value="item.value" />
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item v-if="reportForm.type != 0" label="是否启用：">
+                        <div class="switch-wrapper" :class="{ yes: reportForm.status, no: !reportForm.status }" @click="reportForm.status = !reportForm.status">
+                            <div class="ub ub-ac ub-pj">
+                                <div>是</div>
+                                <div>否</div>
+                            </div>
+                            <div class="circle" />
+                        </div>
+                    </el-form-item>
+                </el-form>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <searchBtn title="确 定" @click="submitTask('reportForm')" />
+                <cancelBtn title="取 消" @click="addDialog = false" />
+            </span>
+        </el-dialog>
+        <task-detail ref="detail" />
+        <el-dialog title="删除" :visible.sync="deleteItemDialog" width="30%" custom-class="attendance-dialog">
+            <span>确定删除吗？</span>
+            <span slot="footer" class="dialog-footer">
+                <searchBtn title="确 定" @click="handleDeleteItemFun" />
+                <cancelBtn title="取 消" @click="deleteItemDialog = false" />
+            </span>
+        </el-dialog>
+        <el-dialog title="删除" :visible.sync="delAllDialog" width="30%" custom-class="attendance-dialog">
+            <span>确定删除吗？</span>
+            <span slot="footer" class="dialog-footer">
+                <searchBtn title="确 定" @click="handleDeleteAllFun" />
+                <cancelBtn title="取 消" @click="delAllDialog = false" />
+            </span>
+        </el-dialog>
+
+        <el-dialog title="设置" :visible.sync="startDialog" width="30%" custom-class="attendance-dialog">
+            <span>确定{{ startReport == 0 ? "禁用" : "开启" }}吗？</span>
+            <span slot="footer" class="dialog-footer">
+                <searchBtn title="确 定" @click="handleSatrtFun" />
+                <cancelBtn title="取 消" @click="startDialog = false" />
+            </span>
+        </el-dialog>
+    </div>
+</template>
+
+<script>
+import {
+    get_task,
+    add_task,
+    del_task,
+    start_task,
+    get_task_templates
+} from '@/server/report_form/api.js'
+import initData from '@/mixins/initData'
+import eHeader from './module/header'
+import TaskDetail from './module/detail'
+export default {
+    name: 'Task',
+    components: { eHeader, TaskDetail },
+    mixins: [initData],
+    data() {
+        return {
+            delAllDialog: false,
+            startReport: '',
+
+            types: [{
+                label: '即时',
+                value: 0
+            },
+            {
+                label: '每日',
+                value: 1
+            },
+            {
+                label: '每周',
+                value: 2
+            },
+            {
+                label: '每月',
+                value: 3
+            },
+            {
+                label: '每季',
+                value: 4
+            }
+            ],
+            templates: [],
+            reportForm: {
+                name: '',
+                type: '',
+                mouldId: '',
+                status: true
+            },
+            rules: {
+                name: [{
+                    required: true,
+                    message: '请输入报表名称',
+                    trigger: 'blur'
+                }],
+                type: [{
+                    required: true,
+                    message: '请选择报表类型',
+                    trigger: 'change'
+                }],
+                mouldId: [{
+                    required: true,
+                    message: '请选择报表模板',
+                    trigger: 'change'
+                }]
+            },
+            addDialog: false,
+            deleteItemDialog: false,
+            startDialog: false,
+            multipleSelection: [],
+            delId: '',
+            sayTimes: null,
+            query: {
+                name: '',
+                status: '',
+                type: '',
+                createUserId: ''
+            }
+        }
+    },
+    watch: {
+        addDialog: {
+            handler(newVal, oldVal) {
+                if (!newVal) {
+                    this.$refs.reportForm.resetFields()
+                    this.sayTimes = null
+                }
+            }
+        }
+    },
+
+    mounted() {
+        this.$nextTick(() => {
+            this.initTemplates()
+            this.init()
+        })
+    },
+    methods: {
+        selectFun(val) {
+            console.log(val)
+        },
+        indexMethod(index) {
+            return (this.page - 1) * this.size + index + 1
+        },
+        searchInit() {
+            this.page = 1
+            this.$nextTick(() => {
+                this.init()
+            })
+        },
+        initTemplates() {
+            this.templates = []
+            const data = {
+                queryData: {},
+                paramsData: {}
+            }
+            get_task_templates(data)
+                .then((res) => {
+                    console.log('模板', res)
+                    if (res.length > 0) {
+                        res.forEach((item) => {
+                            const obj = {}
+                            obj.value = item.id
+                            obj.label = item.name
+                            this.templates.push(obj)
+                        })
+                    }
+                })
+                .catch((error) => {
+                    console.log('error' + error)
+                })
+        },
+
+        init() {
+            this.loading = true
+            this.tableData = []
+            const data = {
+                queryData: {
+                    page: this.page,
+                    pageSize: this.size
+                },
+                paramsData: {
+                    name: this.query.name,
+                    type: this.query.type,
+                    createUserId: this.query.createUserId
+                }
+            }
+            get_task(data)
+                .then((res) => {
+                    console.log(res)
+                    this.loading = false
+                    this.total = res.totalElements
+                    this.tableData = res.content
+                })
+                .catch((error) => {
+                    this.loading = false
+                    console.log('error' + error)
+                })
+        },
+
+        submitTask(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.add_task()
+                } else {
+                    console.log('error submit!!')
+                    return false
+                }
+            })
+        },
+        add_task() {
+            const data = {
+                queryData: {},
+                paramsData: {
+                    name: this.reportForm.name,
+                    type: this.reportForm.type,
+                    mouldId: this.reportForm.mouldId,
+                    startTime: this.sayTimes === null ? '' : this.sayTimes[0],
+                    endTime: this.sayTimes === null ? '' : this.sayTimes[1]
+                }
+            }
+            if (this.reportForm.type === 0) {
+                data.paramsData.status = 0
+            } else {
+                data.paramsData.status = this.reportForm.status ? 0 : 1
+            }
+            add_task(data)
+                .then((res) => {
+                    console.log(res)
+                    this.addDialog = false
+                    this.$message({
+                        message: '添加成功',
+                        type: 'success'
+                    })
+                    setTimeout(() => {
+                        this.get_data()
+                    }, 1500)
+                })
+                .catch((err) => {
+                    this.addDialog = false
+                    console.log(err + 'err')
+                })
+        },
+        handleStart(row) {
+            this.delId = row.id
+            this.startDialog = true
+            this.startReport = row.status
+        },
+        handleSee(row) {
+            this.$refs.detail.detailId = row.id
+            this.$refs.detail.detailDialog = true
+            this.$refs.detail.init(row.id)
+        },
+        handleDelete(row) {
+            this.delId = row.id
+            this.deleteItemDialog = true
+        },
+        handleSelectionChange(val) {
+            console.log(val)
+            this.multipleSelection = val
+        },
+        handleDelAll() {
+            if (this.multipleSelection.length > 0) {
+                this.delAllDialog = true
+            } else {
+                this.$message({
+                    message: '请选择要删除的任务！',
+                    type: 'warning'
+                })
+            }
+        },
+        handleDeleteAllFun() {
+            const ids = []
+            this.multipleSelection.map((item) => {
+                ids.push(item.id)
+            })
+            const data = {
+                queryData: {},
+                paramsData: {
+                    ids: ids
+                }
+            }
+            del_task(data)
+                .then((res) => {
+                    this.$message({
+                        message: '删除成功',
+                        type: 'success'
+                    })
+                    this.delAllDialog = false
+                    setTimeout(() => {
+                        this.get_data()
+                    }, 1500)
+                })
+                .catch((err) => {
+                    console.log(err + 'err')
+                })
+        },
+        handleDeleteItemFun() {
+            const data = {
+                queryData: {},
+                paramsData: {
+                    ids: [this.delId]
+                }
+            }
+            del_task(data)
+                .then((res) => {
+                    this.$message({
+                        message: '删除成功',
+                        type: 'success'
+                    })
+                    this.deleteItemDialog = false
+                    setTimeout(() => {
+                        this.get_data()
+                    }, 1500)
+                })
+                .catch((err) => {
+                    console.log(err + 'err')
+                })
+        },
+        handleSatrtFun() {
+            const data = {
+                queryData: {},
+                paramsData: {
+                    id: this.delId
+                }
+            }
+            start_task(data)
+                .then((res) => {
+                    this.$message({
+                        message: '操作成功',
+                        type: 'success'
+                    })
+                    this.startDialog = false
+                    setTimeout(() => {
+                        this.get_data()
+                    }, 1500)
+                })
+                .catch((err) => {
+                    console.log(err + 'err')
+                })
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+@import './style.scss'
+</style>

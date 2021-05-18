@@ -1,0 +1,126 @@
+<template>
+    <div id="app">
+        <router-view />
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'App',
+    data() {
+        return {}
+    },
+    computed: {
+        theme() {
+            console.log('获取主题', this.$store.state.common.currentTheme)
+            return this.$store.state.common.currentTheme
+        }
+    },
+    watch: {
+        theme: {
+            handler(newVal, oldVal) {
+                console.log('监听主题', newVal)
+                if (newVal === 'white-theme') {
+                    // eslint-disable-next-line no-undef
+                    $('body').removeClass('black-theme').addClass('white-theme')
+                }
+                if (newVal === 'black-theme') {
+                    // eslint-disable-next-line no-undef
+                    $('body').removeClass('white-theme').addClass('black-theme')
+                }
+            },
+            // 代表在wacth里声明了firstName这个方法之后立即先去执行handler方法
+            immediate: true
+        }
+    },
+    created() {
+        const themeInfo = this.$getlocalStorage('themeInfo')
+        if (themeInfo !== '' && themeInfo.type === 0) {
+            this.$store.commit('switchTheme', 'black-theme')
+        } else if (themeInfo !== '' && themeInfo.type === 1) {
+            this.$store.commit('switchTheme', 'white-theme')
+        } else {
+            this.$store.commit('switchTheme', 'black-theme')
+        }
+        if (themeInfo.loginImg !== '') {
+            this.$store.commit('setloginImg', themeInfo.loginImg)
+        } else {
+            this.$store.commit('setloginImg', this.loginImg)
+        }
+        if (themeInfo.logoImg !== '') {
+            this.$store.commit('setlogoImg', themeInfo.logoImg)
+        } else {
+            this.$store.commit('setlogoImg', this.logoImg)
+        }
+    }
+}
+</script>
+
+<style lang="scss">
+body,
+#app {
+  height: 100%;
+  background-color: rgba(17, 29, 43, 1);
+  min-width: 1200px;
+  background-image: url(./assets/img/BG.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 150%;
+}
+.el-main {
+  padding: 0 !important;
+}
+.el-header {
+  padding: 0;
+}
+.header-top {
+  background: #fff;
+  padding: 15px 0 15px 20px;
+
+  .el-breadcrumb {
+    line-height: 24px;
+  }
+}
+
+.fly-table-wrapper {
+  background-color: #fff;
+  margin: 20px;
+  padding: 0 20px;
+}
+.el-step__main {
+  overflow: hidden;
+}
+.el-step__description {
+  width: 100%;
+}
+.logo {
+  color: #fff;
+  padding: 0 0 0 15px;
+  line-height: 28px;
+  img {
+    // float: left;
+    margin-right: 10px;
+    vertical-align: -7px;
+  }
+}
+.form-inline {
+  .el-form-item__content {
+    display: inline-block;
+  }
+  .el-input {
+    width: 60%;
+  }
+}
+.el-form .form-inline .el-form-item__label {
+  width: 60px;
+}
+.el-table .el-tag {
+  margin: 3px;
+}
+.el-upload-list {
+  width: 40%;
+}
+.el-drawer {
+  overflow-y: auto !important;
+}
+</style>

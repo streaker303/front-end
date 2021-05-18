@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<link rel="shortcut icon" href="./static/img/favicon.ico" type="image/x-icon">
+		<title></title>
+		<link type="text/css"  rel="stylesheet" href="./static/css/public.css" />
+		<link type="text/css" rel="stylesheet" href="./static/css/reset.css" />
+		<link type="text/css"  rel="stylesheet" href="./static/css/black_theme.css" /><!--深色主题-->
+		<!--深色主题-->
+        <link type="text/css"  rel="stylesheet" href="./static/css/white_fly.css" />
+		<link type="text/css"  rel="stylesheet" href="./static/css/white_wj.css" />
+
+		<script type="text/javascript" src="./static/js/jquery.min.js"></script>
+		<script type="text/javascript" src="./static/js/three.js"></script>
+		<script type="text/javascript" src="./static/js/Projector.js"></script>
+		<script type="text/javascript" src="./static/js/CanvasRenderer.js"></script>
+		<script type="text/javascript" src="./static/js/stats.min.js"></script><!--性能监视器-->
+
+		<script>
+		// 分辨率大于等于1680，大部分为1920的情况下，调用此css
+		if(window.screen.width > 1680){
+			document.write('<link rel="stylesheet" href="./static/css/index_1920.css">');
+		}
+		// 分辨率再在1600-1680的情况下，调用此css
+		else if(window.screen.width >= 1600){
+			document.write('<link rel="stylesheet" href="./static/css/index_1600.css">');
+		}
+		// 分辨率小于1600的情况下，调用此css
+		else{
+			document.write('<link rel="stylesheet" href="./static/css/index.css">');
+		}
+		</script>
+    </head>
+	<body >
+		<div id="app"></div>
+
+		<!-- built files will be auto injected -->
+		<script type="text/javascript" src="./static/js/echarts.min.js"></script>
+	</body>
+</html>

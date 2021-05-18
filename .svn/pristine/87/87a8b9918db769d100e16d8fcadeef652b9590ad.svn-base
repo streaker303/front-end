@@ -1,0 +1,95 @@
+<template>
+    <div>
+        <div class="ub top-bar">
+            <div ref="play-btn" class="ub ub-ac logo-title" style="height:60px;">
+                <img style="margin-left: 20px;height: 50px;width: auto;" :src="$store.state.common.logoImg" alt="">
+            </div>
+            <div class="ub ub-ac ub-f1 ub-pe" style="width:60%;height:60px;padding-right:15px;">
+                <div class="ub ub-ac exit" style="padding-right:10px;padding-top: 2px">
+                    <div style="font-size:12px;">
+                        <i style="font-size:14px;margin-right:3px;" class="el-icon-s-custom" />{{ userInfo.cnName }}
+                    </div>
+                </div>
+                <div class="home" style="padding-top: 2px">
+                    <div style="font-size:12px;cursor: pointer;color: #fff!important;" @click="exit">
+                        <i class="iconfont icon-tuichu1" style="font-size: 12px" />
+                        退 出
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+import { exit } from '../../server/common.js'
+export default {
+    name: 'TopNav',
+    data() {
+        return {
+            userInfo: {}
+        }
+    },
+    created() {
+        this.userInfo = this.$getsessionStorage('userInfo')
+    },
+    mounted() {
+    },
+    methods: {
+        changeLang() {
+            console.log(this.$i18n)
+            if (this.$i18n.locale === 'zh') {
+                this.$i18n.locale = 'en'
+            } else {
+                this.$i18n.locale = 'zh'
+            }
+        },
+
+        exit() {
+            exit({}).then(res => {
+                console.log(res)
+                if (res.code === 1) {
+                    this.$removesessionStorage('userInfo')
+                    this.$router.push({
+                        name: 'login'
+                    })
+                } else {
+                    this.$message({
+                        message: res.message,
+                        type: 'warning'
+                    })
+                }
+            }).catch(error => {
+                console.log('error', error)
+            })
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+	.top-bar {
+		width: 100%;
+		height: 78px;
+		box-sizing: border-box;
+        background: url("../../../static/img/bar_bg.png") no-repeat;
+        background-size: 100% 60px;
+	}
+
+	.top-right {
+		height: 60px;
+		background-position: right 0;
+		background-repeat: no-repeat;
+		background-size: auto 100%;
+	}
+	.exit {
+		margin-left: 10px;
+		div {
+			color: #ffffff;
+		}
+		i {
+			font-weight: 600;
+		}
+	}
+
+</style>
