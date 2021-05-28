@@ -1,0 +1,199 @@
+<template>
+    <div class="banner">
+        <div class="bx-wrapper" style="max-width: 100%;">
+            <div class="bx-viewport" aria-live="polite" style="width: 100%; overflow: hidden; position: relative; height: 600px;">
+                <ul class="slider" data-options-height="600" data-options-auto="1" data-options-mode="0" data-options-pause="4" data-options-ease="ease-out">
+                    <li v-for="item in banners" :key="item.id" :style="'background-image: url('+item.url+')'"></li>
+                </ul>
+            </div>
+            <div class="bx-controls">
+                <div class="bx-controls-direction">
+                    <a class="bx-prev" href="javascript:;"><i class="el-icon-arrow-left"></i></a>
+                    <a class="bx-next" href="javascript:;"><i class="el-icon-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="dots"></div>
+            <div class="bx-loading" :class="{'show':loadingShow}"></div>
+        </div>
+    </div>
+</template>
+
+<script>
+
+export default {
+    name: 'Login',
+    data() {
+        return {
+            banners: [],
+            flag: 0,
+            imgTotal: 0,
+            loadingShow: true
+        }
+    },
+
+    mounted() {
+        this.$nextTick(() => {
+            this.initBanner()
+        })
+    },
+
+    methods: {
+        initBanner() {
+            setTimeout(() => {
+                let res = [
+                    {
+                        name: '1',
+                        url: '//resources.jsmo.xin/templates/upload/16524/201907/156273995217.png'
+
+                    }, {
+                        name: '2',
+                        url: '//resources.jsmo.xin/templates/upload/16524/201907/1562739842354.png'
+
+                    }, {
+                        name: '3',
+                        url: '//resources.jsmo.xin/templates/upload/16524/201907/156273995217.png'
+
+                    }, {
+                        name: '4',
+                        url: '//resources.jsmo.xin/templates/upload/16524/201907/156273995217.png'
+
+                    }
+                ]
+                let imgs = res.map(item => {
+                    return item.url
+                })
+                let _imgs = this.uniqueArr(imgs)
+                this.imgTotal = _imgs.length
+                this.imageLoaded(_imgs)
+                this.banners = this.$deepCopy(res)
+            }, 2000)
+        },
+        imageLoaded(mulitImg) {
+            let promiseAll = []; let img = []; let imgTotal = mulitImg.length
+            for (let i = 0; i < imgTotal; i++) {
+                promiseAll[i] = new Promise((resolve, reject) => {
+                    img[i] = new Image()
+                    img[i].src = mulitImg[i]
+                    img[i].onload = function() {
+                        // 第i张加载完成
+                        resolve(img[i])
+                    }
+                })
+            }
+            Promise.all(promiseAll).then((img) => {
+                // 全部加载完成
+                this.loadingShow = false
+                // eslint-disable-next-line no-undef
+                $('.slider').slick({
+                    slidesToShow: 1,
+                    autoplay: true,
+                    fade: true,
+                    dots: true,
+                    // eslint-disable-next-line no-undef
+                    appendDots: $('.dots'),
+                    // eslint-disable-next-line no-undef
+                    prevArrow: $('.bx-prev'),
+                    // eslint-disable-next-line no-undef
+                    nextArrow: $('.bx-next')
+                })
+            })
+        },
+        uniqueArr(arr) {
+            var hash = []
+            for (var i = 0; i < arr.length; i++) {
+                if (hash.indexOf(arr[i]) == -1) {
+                    hash.push(arr[i])
+                }
+            }
+            return hash
+        }
+    }
+}
+</script>
+<style lang="scss" scoped>
+.banner{
+    width:100%;
+    height:600px;
+}
+.bx-wrapper {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    *zoom: 1;
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
+}
+.bx-wrapper ul li {
+    width:100%;
+    height:600px;
+    display: block;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.bx-wrapper img {
+    max-width: 100%;
+    display: block;
+}
+
+.bx-wrapper .bx-loading {
+    min-height: 50px;
+    background: url(../assets/img/loading.gif) center center no-repeat #ffffff;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: all ease-out 0.5s;
+    background-color: #000;
+    z-index: -1;
+}
+.bx-wrapper .bx-loading.show{
+    opacity: 1;
+    z-index: 999;
+}
+.bx-wrapper .bx-controls-direction a {
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    top: 50%;
+    outline: 0;
+    border-radius: 30px;
+    margin-top: -30px;
+    background: rgb(251, 251, 251);
+    border: 1px rgba(241, 241, 241, 0.11) solid;
+    transition: all ease-out 0.3s;
+    cursor: pointer;
+}
+.bx-wrapper .bx-controls-direction a i {
+    display: inline-block;
+    color: #fff;
+    font-size: 16px;
+    color: rgba(10, 10, 10, 0.55);
+    margin-top: 13px;
+    margin-left: 11px;
+    transition: all ease-out 0.3s;
+}
+.bx-wrapper .bx-controls-direction a.bx-next i {
+    margin-left: 13px;
+}
+.bx-wrapper .bx-controls-direction a:hover {
+    background: rgb(48, 93, 195);
+    i{
+        color: #fff;
+    }
+}
+.bx-wrapper .bx-next {
+    right: 20px;
+}
+
+.bx-wrapper .bx-prev {
+    left: 20px;
+}
+.bx-wrapper .dots{
+    position: relative;
+    z-index: 10;
+    top:-25px;
+}
+</style>
