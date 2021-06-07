@@ -1,0 +1,40 @@
+.bx-wrapper {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    *zoom: 1;
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
+}
+.bx-wrapper ul li {
+    width:100%;
+    display: block;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.bx-wrapper img {
+    max-width: 100%;
+    display: block;
+}
+.content .header {
+    width: 1160px;
+    padding-top: 80px;
+    padding-bottom: 60px;
+    animation-name: fadeInUp;
+    margin:0 auto;
+    p.title {
+        font-family: "HELVETICANEUELTPRO-THEX", "微软雅黑";
+        font-size: 24px;
+        color: #444;
+        text-align: center;
+
+    }
+    p.subtitle {margin-top: 20px;
+        color: #A1A1A1;
+        font-family: "HELVETICANEUELTPRO-THEX", "微软雅黑";
+        font-size: 14px;
+        line-height: 20px;
+        text-align: center;
+    }
+}

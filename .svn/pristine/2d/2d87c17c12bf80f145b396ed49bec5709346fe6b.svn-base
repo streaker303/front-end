@@ -1,0 +1,30 @@
+{
+  "id": "2583545",
+  "name": "sass",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "278306",
+      "name": "weixin",
+      "font_class": "weixin",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "627031",
+      "name": "shouji",
+      "font_class": "shouji",
+      "unicode": "e6d5",
+      "unicode_decimal": 59093
+    },
+    {
+      "icon_id": "14629292",
+      "name": "weibo",
+      "font_class": "weibo",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    }
+  ]
+}

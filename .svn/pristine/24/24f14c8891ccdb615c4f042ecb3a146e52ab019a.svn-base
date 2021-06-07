@@ -1,0 +1,560 @@
+<template>
+    <div class="index">
+        <div class="content-wrapper">
+            <div class="center w1200">
+                <div class="search">
+                    <el-input v-model="urls" placeholder="请输入URL,多个以','号分隔" class="input-with-select">
+                        <div slot="prepend">
+                            已选中{{ number }}个文件
+                        </div>
+                        <el-button slot="append" v-loading="loadingBtn" type="primary" icon="el-icon-search" @click="runPoc">
+                            执行
+                        </el-button>
+                    </el-input>
+                </div>
+                <h2 class="result-title">
+                    扫描结果
+                </h2>
+                <div class="result">
+                    <pre style="overflow: auto;">
+						<code v-for="(item,index) in result" :key="index">{{ item.result }}</code>
+					</pre>
+                </div>
+                <h2 class="result-title">
+                    扫描/攻击历史
+                </h2>
+                <div>
+                    <el-table
+                        ref="multipleTable"
+                        v-loading="loadingHis"
+                        :data="tableDataHis"
+                        tooltip-effect="dark"
+                        header-cell-class-name="fly-table-title"
+                        style="width: 100%"
+                    >
+                        <el-table-column type="index" label="序号" width="50" align="center">
+                        </el-table-column>
+                        <el-table-column prop="url_arr" label="扫描的URL">
+                        </el-table-column>
+                        <el-table-column label="类型">
+                            <template slot-scope="scope">
+                                <span v-show="scope.row.way == '1'">扫描</span>
+                                <span v-show="scope.row.way == '2'">攻击</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="script_list" label="选中的文件">
+                            <template slot-scope="scope">
+                                <el-tag v-for="(item,index) in scope.row.script_list" :key="index" size="mini" style="margin-right: 5px;">
+                                    {{ item }}
+                                </el-tag>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="create_time" label="创建时间" width="160">
+                        </el-table-column>
+                        <el-table-column align="left" label="操作" width="100">
+                            <template slot-scope="scope">
+                                <el-button size="mini" icon="el-icon-download" type="primary" @click="downFileHis(scope.row)">
+                                    下载结果
+                                </el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <div class="pagination">
+                        <el-pagination
+                            :current-page="get_history.page"
+                            :page-sizes="[10, 20, 30, 40,50]"
+                            :page-size="get_history.size"
+                            layout="total, sizes, prev, pager, next, jumper"
+                            :total="total_num_his"
+                            @size-change="historySizeChange"
+                            @current-change="historyCurrentChange"
+                        >
+                        </el-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 攻击弹窗 -->
+        <el-dialog title="攻击" width="500px" :visible.sync="attackVisible" custom-class="changePassword-dialog">
+            <el-form ref="attackForm" :model="attackForm" :rules="attackRules" label-position="top">
+                <el-form-item label="URL" prop="url" :label-width="formLabelWidth">
+                    <el-input v-model="attackForm.url" placeholder="请输入攻击地址URL，多个以','号分隔" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="攻击参数" prop="attackParameter" :label-width="formLabelWidth">
+                    <el-input v-model="attackForm.attackParameter" placeholder="请输入攻击参数" autocomplete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="cancelAttack">
+                    取 消
+                </el-button>
+                <el-button v-loading="attackResultLoading" type="primary" @click="validAttack('attackForm',attackForm)">
+                    确 定
+                </el-button>
+            </div>
+        </el-dialog>
+        <!-- 攻击结果弹窗 -->
+        <el-dialog title="攻击" width="1000px" :visible.sync="attackResultVis" custom-class="changePassword-dialog">
+            <el-table
+                :data="attackResultData"
+                tooltip-effect="dark"
+                header-cell-class-name="fly-table-title"
+                style="width: 100%"
+            >
+                <el-table-column width="200" align="center" prop="url" label="攻击地址"></el-table-column>
+                <el-table-column width="100" align="center" label="攻击结果">
+                    <template slot-scope="scope">
+                        {{ scope.row.execution == 'true' ? '成功' : '失败' }}
+                    </template>
+                </el-table-column>
+                <el-table-column align="left" label="原因">
+                    <template slot-scope="scope">
+                        <pre style="overflow: auto;">
+							<code>{{ scope.row.result }}</code>
+						</pre>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </el-dialog>
+    </div>
+</template>
+
+<script>
+import {
+    pocList,
+    exec,
+    downloadFile,
+    downPdf,
+    history,
+    getTypeList,
+    attackMethod,
+    login
+} from '../../server/poc/api.js'
+
+export default {
+    name: 'Index',
+    data() {
+        return {
+            typeOptions: [],
+            changePasswordForm: {
+                id: '',
+                oldPwd: '',
+                newPwd: '',
+                confirmPwd: ''
+            },
+            attackRules: {
+                attackParameter: [{
+                    required: true,
+                    message: '请输入攻击参数',
+                    trigger: 'blur'
+                }],
+                url: [{
+                    required: true,
+                    message: '请输入攻击URL',
+                    trigger: 'blur'
+                }]
+            },
+            changePasswordDialog: false,
+            exitDialog: false,
+            formLabelWidth: '120px',
+            userInfo: {
+                chineseName: '',
+                endTime: '',
+                ifEnter: false,
+                mailbox: '',
+                number: 0,
+                phone: '',
+                startTime: '',
+                type: 1,
+                username: ''
+            },
+            urls: '',
+            number: 0,
+            result: [],
+            loading: false,
+            multipleSelection: [],
+            tableData: [],
+            get_params: {
+                page: 1,
+                size: 10,
+                name: '',
+                typeId: '',
+                seTime: []
+            },
+            total_num: 0,
+
+            code: '',
+            loadingHis: true,
+            tableDataHis: [],
+            get_history: {
+                page: 1,
+                size: 10
+            },
+            total_num_his: 0,
+            loadingBtn: false,
+            attackVisible: false,
+            attackForm: {
+                url: '',
+                attackParameter: '',
+                id: ''
+            },
+            attackResultVis: false,
+            attackResultLoading: false,
+            attackResultData: []
+        }
+    },
+    created() {
+        this.login_user()
+        this.userInfo = this.$getlocalStorage('userInfo')
+        console.log('this.userInfo', this.userInfo)
+    },
+    mounted() {
+        setTimeout(() => {
+            this.get_data()
+            this.get_history_data()
+            this.getType()
+        }, 1000)
+    },
+    methods: {
+        attack(row) {
+            console.log(row)
+            this.attackForm.id = row.id
+            this.attackVisible = true
+        },
+        getType() {
+            getTypeList().then(res => {
+                this.typeOptions = res.map(i => { return { value: i.id, label: i.name } })
+                this.typeOptions.push({ value: '', label: '全部' })
+            })
+        },
+        triggerFocus() {
+            this.$refs.typeSelect.focus()
+        },
+        filterType(val, row) {
+            this.get_data()
+            console.log(val, row)
+        },
+        historySizeChange(val) {
+            this.get_history.size = val
+            this.get_history_data()
+        },
+        historyCurrentChange(val) {
+            this.get_history.page = val
+            this.get_history_data()
+        },
+        validChangePassword(formName, obj) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.changePassword(obj)
+                } else {
+                    console.log('error submit!!')
+                    return false
+                }
+            })
+        },
+        validAttack(form, data) {
+            this.$refs[form].validate(valid => {
+                if (valid) {
+                    this.attackRequest(data)
+                } else {
+                    return false
+                }
+            })
+        },
+        attackRequest(data) {
+            console.log(data)
+            this.attackResultLoading = true
+            attackMethod({ queryData: {}, paramsData: {
+                parameter: data.attackParameter,
+                urls: data.url.split(','),
+                pocId: data.id
+            }}).then(res => {
+                // console.log(res);
+                this.attackResultVis = true
+                this.attackResultLoading = false
+                this.attackResultData = res.successList
+                // eslint-disable-next-line handle-callback-err
+            }).catch((err) => {
+                this.attackResultLoading = false
+            })
+        },
+        cancelAttack() {
+            this.attackVisible = false
+            this.attackForm = {
+                url: '',
+                attackParameter: '',
+                id: ''
+            }
+        },
+        download(data, val) {
+            if (!data) {
+                return
+            }
+            let blob = new Blob([data])
+            // let fileName = file.fileName;
+            let fileName = val + '的执行结果.pdf'
+            if ('download' in document.createElement('a')) { // 不是IE浏览器
+                let url = window.URL.createObjectURL(blob)
+                let link = document.createElement('a')
+                link.style.display = 'none'
+                link.href = url
+                link.setAttribute('download', fileName)
+                document.body.appendChild(link)
+                link.click()
+                document.body.removeChild(link) // 下载完成移除元素
+                window.URL.revokeObjectURL(url) // 释放掉blob对象
+            } else { // IE 10+
+                window.navigator.msSaveBlob(blob, fileName)
+            }
+        },
+        downFileHis(val) {
+            console.log(val)
+            let data = {
+                queryData: {
+                    id: val.id
+                },
+                paramsData: {
+                }
+            }
+            downPdf(data).then(res => {
+                console.log('downloadFile', res)
+                this.download(res, val.url_arr)
+                // window.location.href = res;
+            }).catch(error => {
+                this.loading = false
+                console.log(error)
+            })
+        },
+        downFile(val) {
+            console.log(val)
+            let data = {
+                queryData: {
+                    pocid: val.id
+                },
+                paramsData: {
+                }
+            }
+            downloadFile(data).then(res => {
+                console.log('downloadFile', res)
+                this.download(res, val.name)
+                // window.location.href = res;
+            }).catch(error => {
+                this.loading = false
+                console.log(error)
+            })
+        },
+        runPoc() {
+            if (this.multipleSelection.length > 0) {
+                console.log(this.urls)
+                if (this.urls == '') {
+                    this.$message({
+                        message: '请输入要执行的URL',
+                        type: 'error'
+                    })
+                    return false
+                }
+                this.result = []
+                let arr = []
+                this.multipleSelection.forEach(item => {
+                    arr.push(item.id)
+                })
+                let urlArr = this.urls.split(',')
+                let data = {
+                    queryData: {
+
+                    },
+                    paramsData: {
+                        urls: urlArr,
+                        ids: arr,
+                        typeIds: []
+                    }
+                }
+                this.loadingBtn = true
+                exec(data).then(res => {
+                    this.loadingBtn = false
+                    console.log('runPoc', res)
+                    this.result = res.successList
+                    this.userInfo.number = res.integral.number
+                    this.$setlocalStorage('userInfo', this.userInfo)
+                    this.get_history_data()
+                }).catch(error => {
+                    this.loading = false
+                    console.log('error' + error)
+                })
+            } else {
+                this.$message({
+                    message: '请选择要执行的POC文件',
+                    type: 'error'
+                })
+            }
+        },
+        handleSelectionChange(val) {
+            console.log('handleSelectionChange', val)
+            this.multipleSelection = val
+            console.log(this.multipleSelection) // create_id:
+            this.number = this.multipleSelection.length
+        },
+        handleSizeChange(val) {
+            this.get_params.size = val
+            this.get_data()
+        },
+        handleCurrentChange(val) {
+            this.get_params.page = val
+            this.get_data()
+        },
+
+        get_history_data() {
+            this.loadingHis = true
+            this.tableDataHis = []
+            let data = {
+                queryData: {
+                    page: this.get_history.page,
+                    pageSize: this.get_history.size
+                },
+                paramsData: {
+                }
+            }
+            history(data).then(res => {
+                console.log('history', res)
+                this.loadingHis = false
+                let userDates = res.content
+                if (userDates.length > 0) {
+                    userDates.forEach(item => {
+                        let obj = {}
+                        obj.id = item.id
+                        obj.url_arr = item.url_arr
+                        obj.script_list = item.script_list
+                        obj.create_time = item.create_time
+                        obj.way = item.way
+                        this.tableDataHis.push(obj)
+                    })
+                }
+                this.total_num_his = res.totalElements
+            }).catch(error => {
+                this.loadingHis = false
+                console.log('error' + error)
+            })
+        },
+        get_data() {
+            this.loading = true
+            this.tableData = []
+            let data = {
+                queryData: {
+                    page: this.get_params.page,
+                    pageSize: this.get_params.size
+                },
+                paramsData: {
+                    typeId: this.get_params.typeId
+                }
+            }
+            pocList(data).then(res => {
+                console.log('get_data', res)
+                this.loading = false
+                let userDates = res.content
+                if (userDates.length > 0) {
+                    userDates.forEach(item => {
+                        let obj = {}
+                        obj.id = item.id
+                        obj.name = item.name
+                        obj.create_time = item.create_time
+                        obj.type_name = item.type_name
+                        this.tableData.push(obj)
+                    })
+                }
+                this.total_num = res.totalElements
+            }).catch(error => {
+                this.loading = false
+                console.log('error' + error)
+            })
+        },
+        login_user(obj) {
+            let data = {
+                queryData: {
+                    rememberMe: true
+                },
+                paramsData: {
+                    username: 'admin',
+                    password: 111111
+
+                }
+            }
+            login(data).then(res => {
+                console.log('success', res)
+                if (this.checked) {
+                    let data = {
+                        username: 'admin',
+                        password: 111111
+                    }
+                    this.$setlocalStorage('loginInfo', data)
+                } else {
+                    this.$removelocalStorage('loginInfo')
+                }
+            }).catch(error => {
+                console.log('error', error)
+            })
+        },
+
+        login() {
+            this.$router.push('/login')
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.index{
+    background: #fff;
+}
+.center{
+    padding: 20px 0;
+}
+.w1200{
+    width: 1200px;
+    margin: 0 auto;
+}
+.search >>> .el-input-group__append{
+    background: #409eff;
+    color: #fff;
+    border-color: #409eff;
+}
+header{
+    // height: 240px;
+}
+.top {
+    color: #fff;
+    position: relative;
+    height: 100px;
+    padding: 40px 0;
+    .top-right{
+        position: absolute;
+        right: 0;
+        top: 50px;
+        text-align: right;
+        border: 2px solid #fff;
+        border-radius: 8px;
+        padding: 10px;
+    }
+}
+.result-title{
+    font-weight: normal;
+    margin-top: 20px;
+    font-size: 18px;
+    border-left: 5px solid #409eff;
+    padding-left: 10px;
+
+}
+.result{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 0 20px;
+    padding: 20px;
+    min-height: 100px;
+}
+::-webkit-input-placeholder {
+    color: #cecece;
+}
+
+::-ms-input-placeholder {
+    color: #aaa;
+}
+</style>

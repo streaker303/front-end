@@ -1,0 +1,374 @@
+<template>
+    <div class="content">
+        <div class="header wow">
+            <p class="title">
+                安全工具
+            </p>
+
+            <p class="subtitle">
+                —— SERVICE ——
+            </p>
+        </div>
+
+        <div id="servicelist" class="module-content">
+            <div class="wrapper">
+                <div class="bx-wrapper" style="max-width: 20150px;">
+                    <div class="bx-viewport" aria-live="polite" style="width: 100%; overflow: hidden; position: relative; height: 270px;">
+                        <ul class="tools">
+                            <li id="projectitem_0" class="projectitem wow">
+                                <a href="//mo005-16524.mo5.line1.uemo.net/list/post/903877/" class="projectitem_content" target="_blank">
+                                    <div class="projectitem_wrapper">
+                                        <div class="project_img"><img src="//resources.jsmo.xin/templates/upload/16524/201907/1562740741193.jpg" alt="国际空运" width="650" height="385" /></div>
+                                        <div class="project_info">
+                                            <div>
+                                                <p class="title">国际空运</p>
+                                                <p class="subtitle">安全的包装是完美运送的第一步，安全运输。</p>
+                                                <p class="description hide">提供空运进出口、大客户物流解决方案、跨境电商物流等服务，优势体现在突出的国内关务解决能力 。提供订舱、提货、制单、报关、商检、操作、贸易代理等服务。机场地面操作及空运和陆运监管运输服务，根据不同情况采取弹性价格政策及运输方案，使得各方均能受益。特殊货物运输：挂衣箱、危险品、活体动物、贵重物品、鲜活易腐货、个人物品、展览品、返修物品、进（来）料加工、暂时进出口、过境货物等。立即购买</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li id="projectitem_0" class="projectitem wow">
+                                <a href="//mo005-16524.mo5.line1.uemo.net/list/post/903877/" class="projectitem_content" target="_blank">
+                                    <div class="projectitem_wrapper">
+                                        <div class="project_img"><img src="//resources.jsmo.xin/templates/upload/16524/201907/1562740741193.jpg" alt="国际空运" width="650" height="385" /></div>
+                                        <div class="project_info">
+                                            <div>
+                                                <p class="title">国际空运</p>
+                                                <p class="subtitle">安全的包装是完美运送的第一步，安全运输。</p>
+                                                <p class="description hide">提供空运进出口、大客户物流解决方案、跨境电商物流等服务，优势体现在突出的国内关务解决能力 。提供订舱、提货、制单、报关、商检、操作、贸易代理等服务。机场地面操作及空运和陆运监管运输服务，根据不同情况采取弹性价格政策及运输方案，使得各方均能受益。特殊货物运输：挂衣箱、危险品、活体动物、贵重物品、鲜活易腐货、个人物品、展览品、返修物品、进（来）料加工、暂时进出口、过境货物等。立即购买</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li id="projectitem_0" class="projectitem wow">
+                                <a href="//mo005-16524.mo5.line1.uemo.net/list/post/903877/" class="projectitem_content" target="_blank">
+                                    <div class="projectitem_wrapper">
+                                        <div class="project_img"><img src="//resources.jsmo.xin/templates/upload/16524/201907/1562740741193.jpg" alt="国际空运" width="650" height="385" /></div>
+                                        <div class="project_info">
+                                            <div>
+                                                <p class="title">国际空运</p>
+                                                <p class="subtitle">安全的包装是完美运送的第一步，安全运输。</p>
+                                                <p class="description hide">提供空运进出口、大客户物流解决方案、跨境电商物流等服务，优势体现在突出的国内关务解决能力 。提供订舱、提货、制单、报关、商检、操作、贸易代理等服务。机场地面操作及空运和陆运监管运输服务，根据不同情况采取弹性价格政策及运输方案，使得各方均能受益。特殊货物运输：挂衣箱、危险品、活体动物、贵重物品、鲜活易腐货、个人物品、展览品、返修物品、进（来）料加工、暂时进出口、过境货物等。立即购买</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li id="projectitem_0" class="projectitem wow">
+                                <a href="//mo005-16524.mo5.line1.uemo.net/list/post/903877/" class="projectitem_content" target="_blank">
+                                    <div class="projectitem_wrapper">
+                                        <div class="project_img"><img src="//resources.jsmo.xin/templates/upload/16524/201907/1562740741193.jpg" alt="国际空运" width="650" height="385" /></div>
+                                        <div class="project_info">
+                                            <div>
+                                                <p class="title">国际空运</p>
+                                                <p class="subtitle">安全的包装是完美运送的第一步，安全运输。</p>
+                                                <p class="description hide">提供空运进出口、大客户物流解决方案、跨境电商物流等服务，优势体现在突出的国内关务解决能力 。提供订舱、提货、制单、报关、商检、操作、贸易代理等服务。机场地面操作及空运和陆运监管运输服务，根据不同情况采取弹性价格政策及运输方案，使得各方均能受益。特殊货物运输：挂衣箱、危险品、活体动物、贵重物品、鲜活易腐货、个人物品、展览品、返修物品、进（来）料加工、暂时进出口、过境货物等。立即购买</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li id="projectitem_0" class="projectitem wow">
+                                <a href="//mo005-16524.mo5.line1.uemo.net/list/post/903877/" class="projectitem_content" target="_blank">
+                                    <div class="projectitem_wrapper">
+                                        <div class="project_img"><img src="//resources.jsmo.xin/templates/upload/16524/201907/1562740741193.jpg" alt="国际空运" width="650" height="385" /></div>
+                                        <div class="project_info">
+                                            <div>
+                                                <p class="title">国际空运</p>
+                                                <p class="subtitle">安全的包装是完美运送的第一步，安全运输。</p>
+                                                <p class="description hide">提供空运进出口、大客户物流解决方案、跨境电商物流等服务，优势体现在突出的国内关务解决能力 。提供订舱、提货、制单、报关、商检、操作、贸易代理等服务。机场地面操作及空运和陆运监管运输服务，根据不同情况采取弹性价格政策及运输方案，使得各方均能受益。特殊货物运输：挂衣箱、危险品、活体动物、贵重物品、鲜活易腐货、个人物品、展览品、返修物品、进（来）料加工、暂时进出口、过境货物等。立即购买</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li id="projectitem_0" class="projectitem wow">
+                                <a href="//mo005-16524.mo5.line1.uemo.net/list/post/903877/" class="projectitem_content" target="_blank">
+                                    <div class="projectitem_wrapper">
+                                        <div class="project_img"><img src="//resources.jsmo.xin/templates/upload/16524/201907/1562740741193.jpg" alt="国际空运" width="650" height="385" /></div>
+                                        <div class="project_info">
+                                            <div>
+                                                <p class="title">国际空运</p>
+                                                <p class="subtitle">安全的包装是完美运送的第一步，安全运输。</p>
+                                                <p class="description hide">提供空运进出口、大客户物流解决方案、跨境电商物流等服务，优势体现在突出的国内关务解决能力 。提供订舱、提货、制单、报关、商检、操作、贸易代理等服务。机场地面操作及空运和陆运监管运输服务，根据不同情况采取弹性价格政策及运输方案，使得各方均能受益。特殊货物运输：挂衣箱、危险品、活体动物、贵重物品、鲜活易腐货、个人物品、展览品、返修物品、进（来）料加工、暂时进出口、过境货物等。立即购买</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bx-controls">
+                        <div class="bx-controls-direction">
+                            <a class="bx-prev tools-prev" href="javascript:;"><i class="el-icon-back"></i></a>
+                            <a class="bx-next tools-next" href="javascript:;"><i class="el-icon-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="//mo005-16967.mo5.line1.uemo.net/list/id/190345/" class="more wow" style="visibility: visible;">MORE<i class="fa fa-angle-right"></i></a>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'Tools',
+    data() {
+        return {
+
+        }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            // eslint-disable-next-line no-undef
+            $('.tools').slick({
+                slidesToShow: 3,
+                autoplay: false,
+                dots: false,
+                infinite: false,
+                slidesToScroll: 3,
+                // eslint-disable-next-line no-undef
+                prevArrow: $('.tools-prev'),
+                // eslint-disable-next-line no-undef
+                nextArrow: $('.tools-next')
+            })
+        })
+    },
+    methods: {
+
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/assets/css/style.scss';
+.content {
+    width: 100%;
+    height: 500px;
+    background-color: #fff;
+    padding-bottom:100px;
+}
+.content .header {
+    width: 1160px;
+    padding-top: 80px;
+    padding-bottom: 60px;
+    animation-name: fadeInUp;
+    margin:0 auto;
+    p.title {
+        font-family: "HELVETICANEUELTPRO-THEX", "微软雅黑";
+        font-size: 24px;
+        color: #444;
+        text-align: center;
+    }
+    p.subtitle {
+        color: #A1A1A1;
+        font-family: "HELVETICANEUELTPRO-THEX", "微软雅黑";
+        font-size: 14px;
+        line-height: 20px;
+        text-align: center;
+    }
+}
+#servicelist {
+    width: 1160px;
+    margin: 0 auto;
+    >.wrapper {
+        width: 100%;
+    }
+}
+#servicelist a.more {
+    border: #dfdfdf 1px solid;
+    display: block;
+    text-indent: 150px;
+    height: 40px;
+    line-height: 40px;
+    width: 60px;
+    margin: 40px auto 0px;
+    animation-name: fadeInUp;
+    animation-delay: 0.5s;
+    transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+    border-radius: 0px;
+    color: transparent;
+    font-size: 0px;
+    cursor: pointer;
+    background: url(http://resources.jsmo.xin/templates/upload/1124/icon/icon.png)no-repeat 0px -9px;
+}
+#servicelist a.more:hover {
+    border: 1px solid #666;
+    background: url(http://resources.jsmo.xin/templates/upload/1124/icon/icon.png)no-repeat 0px -53px;
+}
+#servicelist .projectitem {
+    transition: all ease-out .3s;
+    width: 374px!important;
+    height: 330px;
+    margin: 0 13px 25px;
+    animation-name: fadeInUp;
+    float: left;
+    position: relative;
+    background: #000;
+}
+#servicelist .projectitem a {
+    display: block;
+    overflow: hidden;
+}
+.projectitem .project_img {
+    padding-top: 62%;
+    position: relative;
+    display: block;
+    overflow: hidden;
+}
+.projectitem a img {
+    overflow: hidden;
+    border-radius: 0px 0px 0px 0px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    perspective: 150;
+    -webkit-perspective: 150;
+    float: none;
+    width: 100%;
+    height: auto;
+    transition: all 0.6s cubic-bezier(0.215, 0.61, 0.355, 1)
+}
+.projectitem a .project_info {
+    border-radius: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all ease-out 0.3s;
+}
+.projectitem a .project_info div {
+    height: 100px;
+    transition: all 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+    position: absolute;
+    bottom: 0px;
+    top: 245px;
+    width: 100%;
+    background: #fff;
+    margin-top: -15px;
+}
+.project_info div::before {
+    transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+    content: '';
+    position: absolute;
+    border-bottom: 0px solid rgba(0, 0, 0, .1);
+    left: 322px;
+    top: 30px;
+    width: 36px;
+    height: 36px;
+    background-color: #fff;
+    border: 1px #e5e5e5 solid;
+    border-radius: 30px;
+    background: url(http://resources.jsmo.xin/templates/upload/2802/icon/icon.png)no-repeat -87px -131px;
+    z-index: 10;
+}
+.projectitem a .project_info p {
+    width: auto;
+    text-align: left;
+    padding: 0 20px;
+}
+.projectitem a .project_info p.title {
+    margin-top: 10px;
+    color: rgba(0, 0, 0, 0);
+    font-size: 16px;
+    transition: all ease-out 0.3s;
+}
+.projectitem a .project_info .title {
+    font-size: 16px;
+    color: #3C3C3C;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    height: 32px;
+    line-height: 32px;
+    text-align: left;
+    margin: 0px;
+    padding-top: 20px;
+    transition: all ease-out 0.3s;
+}
+.projectitem a .project_info .subtitle {
+    display: block;
+    transition: all ease-out .3s;
+    -webkit-transform-origin: center bottom;
+    -moz-transform-origin: center bottom;
+    color: rgba(0, 0, 0, 0.4);
+    width: 75%;
+    height: 40px;
+    overflow: hidden;
+    font-size: 13px;
+    text-align: left;
+    padding: 0px;
+    margin: 0px;
+    margin-left: 20px;
+    line-height: 24px;
+    white-space: nowrap;
+}
+.content_list:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.bx-wrapper ul li {
+    height:270px;
+}
+.bx-wrapper .bx-controls-direction a {
+    position: absolute;
+    outline: 0;
+    width: 40px;
+    height: 30px;
+    bottom: -82px;
+    margin-top: 0;
+    top: auto;
+    background-color: transparent;
+    z-index: 2;
+    transition: all ease-out 0.3s;
+    cursor: pointer;
+
+}
+.bx-wrapper .bx-controls-direction a i {
+    width: 40px;
+    height: 20px;
+    display: block;
+    color: transparent;
+    transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+.bx-wrapper .bx-controls-direction a.bx-prev{
+    left: 50%;
+    margin-left: -100px;
+}
+.bx-wrapper .bx-controls-direction a.bx-next{
+    right: 50%;
+    margin-right: -100px;
+}
+.bx-wrapper .bx-controls-direction a.bx-prev i {
+    background: url(http://resources.jsmo.xin/templates/upload/110/icon/jiantou.png)no-repeat 0px -50px;
+}
+.bx-wrapper .bx-controls-direction a.bx-next i {
+    background: url(http://resources.jsmo.xin/templates/upload/110/icon/jiantou.png)no-repeat -37px -50px;
+}
+.bx-wrapper .bx-controls-direction a.bx-prev:hover i {
+    background: url(http://resources.jsmo.xin/templates/upload/110/icon/jiantou.png)no-repeat 0px -70px;
+}
+.bx-wrapper .bx-controls-direction a.bx-next:hover i {
+    background: url(http://resources.jsmo.xin/templates/upload/110/icon/jiantou.png)no-repeat -37px -70px;
+}
+.bx-wrapper .bx-next {
+    right: -50px;
+}
+
+.bx-wrapper .bx-prev {
+    left: -50px;
+}
+</style>

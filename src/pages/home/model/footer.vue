@@ -1,0 +1,37 @@
+<template>
+    <div class="content">
+        <div class="ub ub-ac ub-pc footer fadeInUp wow">
+            © 2005-2020 启明星辰XXX  &nbsp;&nbsp;&nbsp;&nbsp; COPYRIGHT © 2018 BY UINO  京公网安备 11010502038735号 | 京ICP备13053130号-5 | 经营许可号: 京ICP证150528号 &nbsp;&nbsp;&nbsp;&nbsp; ALL RIGHTS RESERVED
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'Footer',
+    data() {
+        return {
+
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/assets/css/style.scss';
+.content {
+    width: 100%;
+    height:54px;
+    background-color:$baseFontColor;
+}
+.footer{
+    width:1220px;
+    height:54px;
+    margin: 0 auto;
+    overflow: hidden;
+    font-family: MicrosoftYaHei;
+    font-size: 12px;
+    color: #ffffff;
+}
+
+</style>

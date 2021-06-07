@@ -1,0 +1,68 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+import {
+    getlocalStorage
+} from '../assets/js/public_fun.js'
+Vue.use(Router)
+const VueRouterReplace = Router.prototype.replace
+Router.prototype.replace = function replace(to) {
+    return VueRouterReplace.call(this, to).catch(err => err)
+}
+const VueRouterPush = Router.prototype.push
+Router.prototype.push = function push(to) {
+    return VueRouterPush.call(this, to).catch(err => err)
+}
+import common from './common'
+const router = new Router({
+    routes: [
+        ...common
+    ]
+})
+// 路由切换加载进度条
+import LoadingBar from '../components/loading-bar'
+LoadingBar.config({
+    color: '#5cb85c'
+})
+let jump_flag = null
+router.beforeEach((to, from, next) => {
+    const { need_login = false } = to.meta
+    const userInfo = getlocalStorage('userInfo')
+    console.log('need_login', need_login)
+    console.log('userInfo', userInfo)
+    if (need_login && !userInfo) {
+        // 如果页面需要登录但用户没有登录跳到登录页面
+        const next_page = to.name // 配置路由时,每一条路由都要给name赋值
+        next({
+            name: 'login',
+            params: {
+                redirect_page: next_page,
+                ...from.params // 如果跳转需要携带参数就把参数也传递过去
+            }
+        })
+    } else {
+        jump_flag && clearTimeout(jump_flag)
+        if (to.path.indexOf('http') > -1) {
+            console.log(to.path)
+            const _url = 'http' + to.path.split('http')[1]
+            window.open(_url)
+            return
+        }
+        if (to.path.indexOf('situation_awareness') > -1 && from.path.indexOf('situation_awareness') === -1 && from.path.trim() !== '/') {
+            console.log(to.path)
+            jump_flag = setTimeout(() => {
+                jump_flag = null
+                window.open('http://' + window.location.host + '/#' + to.path)
+            }, 500)
+            return
+        }
+        if (to.meta.title) {
+            document.title = to.meta.title
+        }
+        LoadingBar.start()
+        next()
+    }
+})
+router.afterEach(transition => {
+    LoadingBar.finish()
+})
+export default router

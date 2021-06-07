@@ -1,0 +1,237 @@
+<template>
+    <div class="content">
+        <div class="header wow">
+            <p class="title">
+                安全培训
+            </p>
+
+            <p class="subtitle">
+                最专业的品哦哎服务，为您创造更高价值
+            </p>
+        </div>
+        <div class="train">
+            <div class="train-item fadeInUp wow" data-wow-delay=".0s">
+                <div class="date">
+                    12-07
+                </div>
+                <div class="title w100">
+                    网络攻击培训
+                </div>
+                <div class="ub w100 line2 desc">
+                    针对美国移民与海关执法局突然发布的新政策，很多大学都作出了课程计划方面的调整，尽全力帮助留学生保持合法的学  针对美国移民与海关执法局突然发布的新政策，很多大学都作出了课程计划方面的调整，尽全力帮助留学生保持合法的学
+                </div>
+                <div class="img-box">
+                    <img src="../../../assets/img/demo.png" alt="">
+                </div>
+                <div class="link">
+                    <a href="javascript:;"><i class="el-icon-right"></i></a>
+                </div>
+            </div>
+            <div class="train-item fadeInUp wow" data-wow-delay=".1s">
+                <div class="date">
+                    12-07
+                </div>
+                <div class="title w100">
+                    网络攻击培训
+                </div>
+                <div class="ub w100 line2 desc">
+                    针对美国移民与海关执法局突然发布的新政策，很多大学都作出了课程计划方面的调整，尽全力帮助留学生保持合法的学  针对美国移民与海关执法局突然发布的新政策，很多大学都作出了课程计划方面的调整，尽全力帮助留学生保持合法的学
+                </div>
+                <div class="img-box">
+                    <img src="../../../assets/img/demo.png" alt="">
+                </div>
+                <div class="link">
+                    <a href="javascript:;"><i class="el-icon-right"></i></a>
+                </div>
+            </div>
+            <div class="train-item fadeInUp wow" data-wow-delay=".2s">
+                <div class="date">
+                    12-07
+                </div>
+                <div class="title w100">
+                    网络攻击培训
+                </div>
+                <div class="ub w100 line2 desc">
+                    针对美国移民与海关执法局突然发布的新政策，很多大学都作出了课程计划方面的调整，尽全力帮助留学生保持合法的学  针对美国移民与海关执法局突然发布的新政策，很多大学都作出了课程计划方面的调整，尽全力帮助留学生保持合法的学
+                </div>
+                <div class="img-box">
+                    <img src="../../../assets/img/demo.png" alt="">
+                </div>
+                <div class="link">
+                    <a href="javascript:;"><i class="el-icon-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'Train',
+    data() {
+        return {
+
+        }
+    },
+    mounted() {
+
+    },
+    methods: {
+
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/assets/css/style.scss';
+.content {
+    width: 100%;
+    height:1000px;
+    background-color: #fff;
+}
+.content .header {
+    width: 1220px;
+    padding-top: 100px;
+    padding-bottom: 87px;
+    animation-name: fadeInUp;
+    margin:0 auto;
+    p.title {
+        font-family: "HELVETICANEUELTPRO-THEX", "微软雅黑";
+        font-size: 24px;
+        color: #444;
+        text-align: center;
+    }
+    p.subtitle {
+        color: #A1A1A1;
+        font-family: "HELVETICANEUELTPRO-THEX", "微软雅黑";
+        font-size: 14px;
+        line-height: 20px;
+        text-align: center;
+    }
+}
+.train{
+    width:1464px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.train-item{
+    width:468px;
+    height:666px;
+    overflow: hidden;
+    margin: 10px 10px 25px;
+    border-radius: 10px;
+    float: left;
+    position: relative;
+    padding:50px;
+    box-sizing: border-box;
+    transition: all ease-out .3s;
+}
+.train-item .date{
+    position: absolute;
+    top: 40px;
+    font-family: MicrosoftYaHei;
+    font-size: 34px;
+    color: #333333;
+    color: #666;
+    opacity: 0;
+    transition: all 0.36s ease;
+}
+.train-item .title{
+    font-family: MicrosoftYaHei;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: #2e7fff;
+    margin: 90px 0 53px;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis
+}
+.train-item .desc{
+    font-family: MicrosoftYaHei;
+    font-size: 12px;
+    line-height: 25px;
+    letter-spacing: 1px;
+    color: #848484;
+}
+.train-item .img-box{
+    width: 368px;
+    height: 200px;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    margin-top: 16px;
+    img{
+        vertical-align: top;
+        width: 100%;
+        transition: all 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+        perspective: 150;
+        -webkit-perspective: 150;
+        height: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+    }
+}
+.train-item .link{
+    margin-top: 60px;
+    a{
+        display: block;
+        width: 63px;
+        height: 63px;
+        border: none;
+        margin: 0;
+        padding: 0;
+        line-height: 63px;
+        border-radius: 100px;
+        transition: all 0.36s ease;
+        cursor: pointer;
+        text-align: center;
+        i{
+            display: inline-block;
+            color: #666;
+            vertical-align: middle;
+            font-size: 34px;
+            transform: rotateZ(-45deg);
+            transition: all 0.36s ease;
+        }
+    }
+}
+.train-item::before{
+    content: '';
+    width: 0;
+    height: 3px;
+    background-color: #2e7fff;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transition: all 0.4s ease;
+    opacity: 0;
+}
+.train-item:hover{
+    box-shadow: 0px 7px 17px rgba(0,0,0,.2);
+    .date{
+        top:50px;
+        opacity: 1;
+    }
+    .img-box img {
+        transform: scale(1.2, 1.2);
+
+    }
+    .link{
+        a{
+            background-color: #2e7fff;
+            i{
+                color: #fff;
+                transform: rotateZ(0deg);
+            }
+        }
+    }
+    &::before{
+        width:100%;
+        opacity: 1;
+        left: 0;
+    }
+}
+</style>

@@ -1,0 +1,405 @@
+<template>
+    <div class="content">
+        <div class="header wow">
+            <p class="title">
+                服务范围
+            </p>
+
+            <p class="subtitle">
+                —— SERVICE ——
+            </p>
+        </div>
+
+        <div id="servicelist" class="module-content">
+            <div class="wrapper">
+                <div class="bx-wrapper">
+                    <div class="bx-viewport" aria-live="polite" style="width: 100%; overflow: hidden; position: relative; height: 335px;">
+                        <ul class="content_list">
+                            <li id="serviceitem_0" class="serviceitem wow">
+                                <a href="//mo005-16967.mo5.line1.uemo.net/list/post/930699/" class="serviceitem_content" target="_blank">
+
+                                    <p class="service_img">
+
+                                        <img src="//resources.jsmo.xin/templates/upload/16967/201908/1565247112384.png" alt="科技   science" /></p>
+
+                                    <div class="service_info">
+
+                                        <p class="title">科技   science</p>
+
+                                        <p class="subtitle hide"></p>
+
+                                        <p class="description">社会上习惯于把科学和技术联在一起，统称为“科技”。实际二者既有密切联系，又有重要区别。</p>
+
+                                    </div>
+
+                                </a>
+
+                                <a href="//mo005-16967.mo5.line1.uemo.net/list/post/930699/" target="_blank" class="details">more<i class="fa fa-angle-right"></i></a>
+                            </li>
+
+                            <li id="serviceitem_1" class="serviceitem wow">
+                                <a href="//mo005-16967.mo5.line1.uemo.net/list/post/930702/" class="serviceitem_content" target="_blank">
+
+                                    <p class="service_img">
+
+                                        <img src="//resources.jsmo.xin/templates/upload/16967/201908/1565247159326.png" width="320" height="120" alt="建设   Factory" /></p>
+
+                                    <div class="service_info">
+
+                                        <p class="title">建设   Factory</p>
+
+                                        <p class="subtitle hide"></p>
+
+                                        <p class="description">建筑是建筑物与构筑物的总称，是人们为了满足社会生活需要，利用所掌握的物质技术手段...</p>
+
+                                    </div>
+
+                                </a>
+
+                                <a href="//mo005-16967.mo5.line1.uemo.net/list/post/930702/" target="_blank" class="details">more<i class="fa fa-angle-right"></i></a>
+                            </li>
+
+                            <li id="serviceitem_2" class="serviceitem wow">
+                                <a href="//mo005-16967.mo5.line1.uemo.net/list/post/930701/" class="serviceitem_content" target="_blank">
+
+                                    <p class="service_img">
+
+                                        <img src="//resources.jsmo.xin/templates/upload/16967/201908/1565247211206.png" width="320" height="120" alt="信息   Information" /></p>
+
+                                    <div class="service_info">
+
+                                        <p class="title">信息   Information</p>
+
+                                        <p class="subtitle hide"></p>
+
+                                        <p class="description">信息，指音讯、消息、通讯系统传输和处理的对象，泛指人类社会传播的一切内容。</p>
+
+                                    </div>
+
+                                </a>
+
+                                <a href="//mo005-16967.mo5.line1.uemo.net/list/post/930701/" target="_blank" class="details">more<i class="fa fa-angle-right"></i></a>
+                            </li>
+
+                            <li id="serviceitem_3" class="serviceitem wow">
+                                <a href="//mo005-16967.mo5.line1.uemo.net/list/post/930700/" class="serviceitem_content" target="_blank">
+
+                                    <p class="service_img">
+
+                                        <img src="//resources.jsmo.xin/templates/upload/16967/201908/1565247253592.png" width="320" height="120" alt="网络资源  Network resources" /></p>
+
+                                    <div class="service_info">
+
+                                        <p class="title">网络资源  Network resources</p>
+
+                                        <p class="subtitle hide"></p>
+
+                                        <p class="description">网络资源，是利用计算机系统通过通信设备传播和网络软件管理的信息资源。</p>
+
+                                    </div>
+
+                                </a>
+
+                                <a href="//mo005-16967.mo5.line1.uemo.net/list/post/930700/" target="_blank" class="details">more<i class="fa fa-angle-right"></i></a>
+                            </li>
+
+                            <li id="serviceitem_4" class="serviceitem wow">
+                                <a href="//mo005-16967.mo5.line1.uemo.net/list/post/930704/" class="serviceitem_content" target="_blank">
+
+                                    <p class="service_img">
+
+                                        <img src="//resources.jsmo.xin/templates/upload/16967/201908/1565247289316.png" width="320" height="120" alt="广告    Advertising" /></p>
+
+                                    <div class="service_info">
+
+                                        <p class="title">广告    Advertising</p>
+
+                                        <p class="subtitle hide"></p>
+
+                                        <p class="description">广告是为了某种特定的需要，通过一定形式的媒体，公开而广泛地向公众传递信息的宣传手段。</p>
+
+                                    </div>
+
+                                </a>
+
+                                <a href="//mo005-16967.mo5.line1.uemo.net/list/post/930704/" target="_blank" class="details">more<i class="fa fa-angle-right"></i></a>
+                            </li>
+
+                            <li id="serviceitem_5" class="serviceitem wow">
+                                <a href="//mo005-16967.mo5.line1.uemo.net/list/post/930705/" class="serviceitem_content" target="_blank">
+
+                                    <p class="service_img">
+
+                                        <img src="//resources.jsmo.xin/templates/upload/16967/201908/1565247322103.png" width="320" height="120" alt="资产管理   Assets" /></p>
+
+                                    <div class="service_info">
+
+                                        <p class="title">资产管理   Assets</p>
+
+                                        <p class="subtitle hide"></p>
+
+                                        <p class="description">Now on three integrated deployment modelspublic dedicated and local</p>
+
+                                    </div>
+
+                                </a>
+
+                                <a href="//mo005-16967.mo5.line1.uemo.net/list/post/930705/" target="_blank" class="details">more<i class="fa fa-angle-right"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bx-controls">
+                        <div class="bx-controls-direction">
+                            <a class="bx-prev" href="javascript:;"><i class="el-icon-back"></i></a>
+                            <a class="bx-next" href="javascript:;"><i class="el-icon-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="dots"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'Advantage',
+    data() {
+        return {
+
+        }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            // eslint-disable-next-line no-undef
+            $('.content_list').slick({
+                slidesToShow: 4,
+                autoplay: false,
+                dots: false,
+                infinite: false,
+                slidesToScroll: 4,
+                // eslint-disable-next-line no-undef
+                prevArrow: $('.bx-prev'),
+                // eslint-disable-next-line no-undef
+                nextArrow: $('.bx-next')
+            })
+        })
+    },
+    methods: {
+
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.content {
+    width: 100%;
+    height: 500px;
+}
+.content .header {
+    width: 1160px;
+    padding-top: 80px;
+    padding-bottom: 60px;
+    animation-name: fadeInUp;
+    margin:0 auto;
+    p.title {
+        font-family: "HELVETICANEUELTPRO-THEX", "微软雅黑";
+        font-size: 24px;
+        color: #444;
+        text-align: center;
+    }
+    p.subtitle {
+        color: #A1A1A1;
+        font-family: "HELVETICANEUELTPRO-THEX", "微软雅黑";
+        font-size: 14px;
+        line-height: 20px;
+        text-align: center;
+    }
+}
+#servicelist {
+    width: 1160px;
+    margin: 0 auto;
+    >.wrapper {
+        width: 100%;
+    }
+}
+#servicelist .serviceitem {
+    width: 252.5px;
+    height: 335px;
+    margin: 0px 50px 0px 0px;
+    float: left;
+    list-style: none;
+    position: relative;
+    visibility: visible;
+    animation-delay: 0s;
+    animation-name: slideInUp;
+}
+// #servicelist .serviceitem:last-child{
+//     margin-right: 0!important;
+// }
+#servicelist .serviceitem .service_img {
+    padding-top: 37.5%;
+    position: relative;
+    display: block;
+    overflow: hidden;
+}
+#servicelist .serviceitem .service_img img {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+    height: auto;
+    float:none;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0 auto;
+
+}
+#servicelist .serviceitem a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.serviceitem  a.details {
+    border: #dfdfdf 1px solid;
+    background: rgba(255, 255, 255, 0);
+    width: 360px;
+    height: 58px;
+    margin: 40px auto 50px;
+    line-height: 58px;
+    font-size: 20px;
+    color: #838383;
+    text-indent: 150px;
+    border-radius: 30px;
+    transition: all ease-out 0.3s;
+    display: none;
+}
+#servicelist .serviceitem div {
+    text-align: left;
+    margin-top: 15px;
+}
+
+#servicelist .serviceitem div p.title {
+    color: #595959;
+    font-size: 16px;
+    height: 40px;
+    line-height: 40px;
+    transition: all ease-out 0.2s;
+}
+
+#servicelist .serviceitem div div.description,
+#servicelist .serviceitem div p.description {
+    color: #848484;
+    font-size: 13px;
+    line-height: 24px;
+    height: 50px;
+    overflow: hidden;
+    width: 100%;
+}
+
+#servicelist .serviceitem:hover .title {
+    color: #838383;
+}
+
+#servicelist .serviceitem div p.title::before {
+    position: absolute;
+    content: "";
+    width: 10px;
+    height: 1px;
+    background-color: #3C3C3C;
+    margin-top: 46px;
+    transition: all 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+
+#servicelist .serviceitem:hover div p.title::before {
+    width: 100%;
+}
+#servicelist .serviceitem div p.title {
+    height: 46px;
+    line-height: 46px;
+}
+#mservice .content .header {
+    padding-top: 80px;
+    padding-bottom: 60px;
+}
+#servicelist .serviceitem:hover .title {
+    color: #272727;
+}
+#servicelist .serviceitem div {
+    text-align: left;
+}
+
+.content_list:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.bx-wrapper {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    *zoom: 1;
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
+}
+.bx-wrapper ul li {
+    width:100%;
+    height:335px;
+    display: block;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.bx-wrapper img {
+    max-width: 100%;
+    display: block;
+}
+.bx-wrapper .bx-controls-direction a {
+    position: absolute;
+    margin-top: -20px;
+    outline: 0;
+    width: 40px;
+    height: 40px;
+    z-index: 2;
+    transition: all ease-out 0.3s;
+    cursor: pointer;
+}
+.bx-wrapper .bx-controls-direction a i {
+    width: 40px;
+    height: 20px;
+    display: block;
+    color: transparent;
+    transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+.bx-wrapper .bx-controls-direction a.bx-prev{
+    left: -58px;
+    top: 102px;
+}
+.bx-wrapper .bx-controls-direction a.bx-next{
+    right: -58px;
+    top: 102px;
+}
+.bx-wrapper .bx-controls-direction a.bx-prev i {
+    background: url(http://resources.jsmo.xin/templates/upload/110/icon/jiantou.png)no-repeat 0px -50px;
+}
+.bx-wrapper .bx-controls-direction a.bx-next i {
+    background: url(http://resources.jsmo.xin/templates/upload/110/icon/jiantou.png)no-repeat -37px -50px;
+}
+// .bx-wrapper .bx-controls-direction a:hover {
+//     background: rgb(48, 93, 195);
+//     i{
+//         color: #fff;
+//     }
+// }
+.bx-wrapper .bx-next {
+    right: -50px;
+}
+
+.bx-wrapper .bx-prev {
+    left: -50px;
+}
+</style>

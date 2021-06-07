@@ -1,0 +1,126 @@
+<template>
+    <div class="content">
+        <div class="header wow">
+            <p class="title">
+                关于我们
+            </p>
+
+            <p class="subtitle">
+                最专业的品哦哎服务，为您创造更高价值
+            </p>
+        </div>
+        <div class="ub ub-ac about">
+            <div class="box">
+                <div class="title fadeInUp wow" data-wow-delay=".1s">
+                    企业介绍
+                </div>
+                <div class="sub-title fadeInUp wow" data-wow-delay=".2s">
+                    ABOUT
+                </div>
+                <div class="ub line3 text fadeInUp wow" data-wow-delay=".3s">
+                    启明星辰信息技术集团股份有限公司是国内最具实力的网络安全产品、可信安全管理平台、安全服务与解决方案的综合提供商，正稳步向国际网络安全领导企业行列迈进。启明星辰公司总部位于北京，在全国各省市自治区设立近三十家分支机构，并拥有覆盖全国渠道体系和技术支持中心。
+                </div>
+                <div class="img fadeInRight wow" data-wow-delay=".3s">
+                    <img :src="imgUrl" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'About',
+    data() {
+        return {
+            imgUrl: require('../../../assets/img/company.png')
+        }
+    },
+    mounted() {
+
+    },
+    methods: {
+
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/assets/css/style.scss';
+.content {
+    width: 100%;
+    height:780px;
+    background-color: #f8f8f8;
+}
+.content .header {
+    width: 1220px;
+    padding-top: 94px;
+    padding-bottom: 24px;
+    animation-name: fadeInUp;
+    margin:0 auto;
+    p.title {
+        font-family: "HELVETICANEUELTPRO-THEX", "微软雅黑";
+        font-size: 24px;
+        color: #444;
+        text-align: center;
+    }
+    p.subtitle {
+        color: #A1A1A1;
+        font-family: "HELVETICANEUELTPRO-THEX", "微软雅黑";
+        font-size: 14px;
+        line-height: 20px;
+        text-align: center;
+    }
+}
+.about{
+    width:1220px;
+    height:610px;
+    margin: 0 auto;
+    overflow: hidden;
+    .box{
+        width:867px;
+        height:385px;
+        padding-left:100px;
+        box-sizing: border-box;
+        background-color: #2e7fff;
+        position: relative;
+        .title{
+            margin-top: 106px;
+            font-family: MicrosoftYaHei;
+            font-size: 18px;
+            letter-spacing: 0px;
+            color: #ffffff;
+        }
+        .sub-title{
+            margin-top: 106x;
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0.5;
+        }
+        .text{
+            width:520px;
+            margin-top: 28px;
+            font-family: MicrosoftYaHeiLight;
+            font-size: 12px;
+            line-height: 20px;
+            color: #ffffff;
+            opacity: 0.8;
+        }
+        .img{
+            width:556px;
+            height:300px;
+            position: absolute;
+            left:664px;
+            top:44px;
+            box-shadow: 0px 7px 17px rgba(0,0,0,.2);
+            img{
+                display: block;
+                width:100%;
+                height:100%;
+            }
+        }
+    }
+}
+
+</style>

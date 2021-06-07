@@ -1,0 +1,80 @@
+import request from '@/utils/server'
+
+// poc文件列表
+export const pocList = (data) => {
+    return request({
+        url: '/api/poc/pocList',
+        method: 'post',
+        params: data.queryData,
+        data: data.paramsData
+    })
+}
+
+// poc文件列表
+export const exec = (data) => {
+    return request({
+        url: '/poc/exec',
+        method: 'post',
+        params: data.queryData,
+        data: data.paramsData
+    })
+}
+
+// 下载文件
+export const downloadFile = (data) => {
+    return request({
+        url: 'poc/getExecDataFile',
+        method: 'post',
+        params: data.queryData,
+        data: data.paramsData,
+        responseType: 'blob'
+    })
+}
+
+// 下载历史文件
+export const downPdf = (data) => {
+    return request({
+        url: 'poc/downPdf',
+        method: 'post',
+        params: data.queryData,
+        data: data.paramsData,
+        responseType: 'blob'
+    })
+}
+
+export const history = (data) => {
+    return request({
+        url: '/api/poc/history',
+        method: 'post',
+        params: data.queryData,
+        data: data.paramsData
+    })
+}
+
+// 获取文件类型下拉菜单
+export const getTypeList = (data) => {
+    return request('common/list', {
+        url: '/api/common/list',
+        method: 'get',
+        params: data
+    })
+}
+
+// 攻击
+export const attackMethod = (data) => {
+    return request({
+        url: '/poc/attackExec',
+        method: 'post',
+        params: data.queryData,
+        data: data.paramsData
+    })
+}
+// 登录接口
+export const login = (data) => 	{
+    return request({
+        url: '/api/login',
+        method: 'post',
+        params: data.queryData,
+        data: data.paramsData
+    })
+}
